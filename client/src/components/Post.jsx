@@ -17,9 +17,8 @@ function Post({
             <div>
               <i
                 onClick={() => like(id)}
-                className={`fa-heart fa-xl ${
-                  likes ? "fa-solid" : "fa-regular"
-                }`}
+                className={`fa-heart fa-xl ${likes ? "fa-solid" : "fa-regular"
+                  }`}
               ></i>
               <span className="ms-1">{likes}</span>
             </div>

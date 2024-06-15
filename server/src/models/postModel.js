@@ -3,8 +3,8 @@ import pool from "../../database/config.js";
 
 //GET ALL SONGS
 export const getAllPostsModel = async () => {
-    const SQLquery = { 
-        text: 'SELECT id, titulo, img, descripcion, likes FROM posts ORDER BY id' 
+    const SQLquery = {
+        text: 'SELECT id, titulo, img, descripcion, likes FROM posts ORDER BY id'
     };
     try {
         const result = await pool.query(SQLquery);
@@ -18,10 +18,10 @@ export const getAllPostsModel = async () => {
 //POST
 export const createPostModel = async ({ titulo, url, descripcion }) => {
     const existePost = await validatePost({ url });
-        
-        if (existePost) {
-            return { error: 'Ya existe un registro con el mismo título, URL y descripción.' };
-        }
+
+    if (existePost) {
+        return { error: 'Ya existe un registro con el mismo título, URL y descripción.' };
+    }
     const SQLquery = {
         text: 'INSERT INTO posts(titulo, img, descripcion, likes) VALUES ($1, $2, $3, $4) RETURNING *',
         values: [titulo, url, descripcion, 0]
@@ -34,22 +34,21 @@ export const createPostModel = async ({ titulo, url, descripcion }) => {
     }
 };
 
-// Validar si existe post con igual url.
+// Validar si existe algún post con igual url.
 const validatePost = async ({ url }) => {
     const checkQuery = {
-    text: `SELECT id FROM posts WHERE img = $1`,
-    values: [url]
-};
-
-try {
-    const checkResult = await pool.query(checkQuery);
-    if (checkResult.rows.length > 0) {
-        return true ;
+        text: `SELECT id FROM posts WHERE img = $1`,
+        values: [url]
+    };
+    try {
+        const checkResult = await pool.query(checkQuery);
+        if (checkResult.rows.length > 0) {
+            return true;
+        }
+    } catch (error) {
+        console.log(error);
     }
-} catch (error) {
-    console.log(error);
-}
-return false;
+    return false;
 }
 
 //POST
@@ -79,4 +78,3 @@ export const deletePostModel = async ({ id }) => {
         console.log(error);
     }
 };
-
