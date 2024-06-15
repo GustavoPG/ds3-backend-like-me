@@ -20,7 +20,7 @@ export const createPostModel = async ({ titulo, url, descripcion }) => {
     const existePost = await validatePost({ url });
 
     if (existePost) {
-        return { error: 'Ya existe un registro con el mismo título, URL y descripción.' };
+        return { error: 'Ya existe un registro con el mismo URL.' };
     }
     const SQLquery = {
         text: 'INSERT INTO posts(titulo, img, descripcion, likes) VALUES ($1, $2, $3, $4) RETURNING *',
