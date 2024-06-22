@@ -1,4 +1,5 @@
 import { createPostModel, getAllPostsModel, likePostModel, deletePostModel } from "../models/postModel.js";
+import { searchError } from "../utils/utils.js";
 
 // GET
 export const getAllPosts = async (req, res) => {
@@ -6,7 +7,9 @@ export const getAllPosts = async (req, res) => {
         const posts = await getAllPostsModel();
         res.status(200).json(posts);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        const errorFound = searchError(error.code);
+        return res.status(errorFound[0].status).json({ error: errorFound[0].message });
+        //res.status(500).json({ error: error.message });
     }
 }
 
@@ -17,7 +20,9 @@ export const createPost = async (req, res) => {
         const newPost = await createPostModel({ titulo, url, descripcion });
         res.status(201).json(newPost);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        const errorFound = searchError(error.code);
+        return res.status(errorFound[0].status).json({ error: errorFound[0].message });
+        //res.status(500).json({ error: error.message });
     }
 }
 
@@ -28,7 +33,9 @@ export const likePost = async (req, res) => {
         const newPost = await likePostModel({ id });
         res.status(200).json(newPost);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        const errorFound = searchError(error.code);
+        return res.status(errorFound[0].status).json({ error: errorFound[0].message });
+        //res.status(500).json({ error: error.message });
     }
 }
 
@@ -39,6 +46,8 @@ export const deletePost = async (req, res) => {
         const newPost = await deletePostModel({ id });
         res.status(200).json(newPost);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        const errorFound = searchError(error.code);
+        return res.status(errorFound[0].status).json({ error: errorFound[0].message });
+        //res.status(500).json({ error: error.message });
     }
 } 
