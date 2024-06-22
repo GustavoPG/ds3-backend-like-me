@@ -27,6 +27,13 @@ function App() {
     }
     const post = { titulo, url: imgSrc, descripcion };
       await axios.post(urlBaseServer + "/posts", post);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "¡¡Imagen Agregada!!",
+        showConfirmButton: false,
+        timer: 1500
+      });
       getPosts();
   };
 

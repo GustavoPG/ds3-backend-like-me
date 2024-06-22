@@ -51,7 +51,7 @@ const validatePost = async ({ url }) => {
     return false;
 }
 
-//POST
+//PUT
 export const likePostModel = async ({ id }) => {
     const SQLquery = {
         text: 'UPDATE posts SET likes = likes + 1 WHERE id = $1',
