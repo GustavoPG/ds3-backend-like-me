@@ -26,7 +26,8 @@ function App() {
       return;
     }
     const post = { titulo, url: imgSrc, descripcion };
-      await axios.post(urlBaseServer + "/posts", post);
+    const response = await axios.post(urlBaseServer + "/posts", post);
+    if (response.status === 200 || response.status === 201) {
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -34,6 +35,7 @@ function App() {
         showConfirmButton: false,
         timer: 1500
       });
+    }
       getPosts();
   };
 
